@@ -33,8 +33,8 @@
 using namespace std;
 
 
-const int WIDTH_TEXT = 20;
-const int WIDTH_INT  = 4;
+const int WIDTH_TEXT = 30u;
+const int WIDTH_INT  = 4u;
 /*
  Asks the user if he wants to start the program again
  Checks the validity of the input
@@ -45,25 +45,24 @@ const int WIDTH_INT  = 4;
 bool doAgain();
 int input(string message, int limitMin, int limitMax, string error="Mauvaise saisie. Veuillez reessayez");
 void printRoad(int lengthCirc,int amplitude,int widthRoad,int width);
+void toQuit(string message);
 
 int main() {
-    srand(time(NULL));
-
     const int   LENGTH_MIN      = 0,
                 LENGTH_MAX      = 1000,
-                AMP_MIN         = 0,
+                AMP_MIN         = 1,
                 AMP_MAX         = 3,
                 WIDTH_ROAD_MIN  = 3,
                 WIDHT_ROAD_MAX  = 10,
                 WIDTH_MIN       = 20,
                 WIDHT_MAX       = 50;
 
-    char        answer;
     int         lengthCirc,
                 amplitude,
                 widthRoad,
                 width;
 
+    srand(time(NULL));
     do{
         cout << "Ce programme affiche une route en fonction de différents paramètres" << endl << endl;
 
@@ -72,32 +71,28 @@ int main() {
         widthRoad   = input("Largeur de la route", WIDTH_ROAD_MIN, WIDHT_ROAD_MAX);
         width       = input("Largeur totale", WIDTH_MIN, WIDHT_MAX);
 
+        printRoad(lengthCirc, amplitude, widthRoad, width);
 
-        printRoad(lengthCirc,amplitude,widthRoad,width);
+    }while(doAgain());
 
-
-
-
-
-        answer = doAgain();
-    }while(answer);
-
+    toQuit("Pressez ENTER pour quitter..");
     return EXIT_SUCCESS;
 }
-
 
 bool doAgain(){
 
     char const YES = 'Y';
     char const NO = 'N';
     char answer;
-
+    bool isValid;
     do{
-        cout << "Do you want to start again? [y/n]";
-        cin >> answer;
+        cout << "Do you want to start again? ["<<YES<<"/"<<NO<<"]";
+        isValid = bool(cin >> answer);
+        if(isValid)
+            cin.clear();
+        VIDER_BUFFER;
 
-        }while(toupper(answer) != YES || toupper(answer) != NO);
-
+        }while(!(isValid || toupper(answer) == YES || toupper(answer) == NO));
 
         return(toupper(answer)==YES);
 }
@@ -105,8 +100,8 @@ bool doAgain(){
 int input(string message, int limitMin, int limitMax, string error){
     int userInput;
     bool isValid;
-    do{
-        cout << setw(WIDTH_TEXT) << message << ": [ " << setw(WIDTH_INT) << limitMin << " et " << setw(WIDTH_INT) << limitMax <<"] :" ;
+    do{                                      //Shut Clion about u long
+        cout  << message << setw(WIDTH_TEXT-(int)message.length()) << ": [ " << setw(WIDTH_INT) << limitMin << " et " << setw(WIDTH_INT) << limitMax <<"] :" ;
         isValid = bool(cin >> userInput);
 
         if(!isValid || userInput < limitMin || userInput > limitMax ){
@@ -115,13 +110,11 @@ int input(string message, int limitMin, int limitMax, string error){
         }
         VIDER_BUFFER;
 
-    }while(userInput < limitMin || userInput > limitMax);
+    }while(!isValid || userInput < limitMin || userInput > limitMax);
 
     return userInput;
 }
-string widthRoad(int width, char CHAR_ROAD){
-    return "e";
-}
+
 void printRoad(int lengthCirc,int amplitude,int widthRoad,int width){
 
     const char CHAR_LIM     = '|';
@@ -129,17 +122,27 @@ void printRoad(int lengthCirc,int amplitude,int widthRoad,int width){
     const char CHAR_SPACE   = ' ';
 
     int sizeSpace = (width-2-widthRoad)/2;
-    int shift;
-    for (int dist=0;dist<lengthCirc;++dist){
+    int shift = 0;
+    int shiftmp;
+    for (int dist=0;dist<=lengthCirc;++dist){
 
         if(dist){
-            shift = rand()%6 -3;
-        }
-        cout << setw(WIDTH_INT) << (dist%10 ? " " : to_string(dist));
-        cout << CHAR_LIM << string(sizeSpace-shift,CHAR_SPACE) << string(widthRoad,CHAR_ROAD) << string(widthRoad-2-sizeSpace+shift,CHAR_SPACE) << CHAR_LIM << endl;
+            shiftmp = rand()%((amplitude*2)+1)-amplitude;
 
+            shift = sizeSpace-shiftmp <= -1 ? -abs(shiftmp) : width-2-widthRoad-sizeSpace+shiftmp <= -1 ? abs(shiftmp) : shiftmp;
+        }
+        cout    << setw(WIDTH_INT) << (dist%10 ? " " : to_string(dist))
+                << CHAR_LIM
+                << string(sizeSpace-shift,CHAR_SPACE) 
+                << string(widthRoad,CHAR_ROAD)
+                << string(width-2-widthRoad-sizeSpace+shift,CHAR_SPACE)
+                << CHAR_LIM << endl;
         sizeSpace-=shift;
     }
 
+}
+void toQuit(string message){
+    cout << message;
+    cin.get();
 }
 
