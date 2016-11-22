@@ -124,6 +124,7 @@ void printRoad(int lengthCirc,int amplitude,int widthRoad,int width){
     int sizeSpace = (width-2-widthRoad)/2;
     int shift = 0;
     int shiftmp;
+    string widthRoadPrint = string(widthRoad,CHAR_ROAD);
     for (int dist=0;dist<=lengthCirc;++dist){
 
         if(dist){
@@ -133,8 +134,8 @@ void printRoad(int lengthCirc,int amplitude,int widthRoad,int width){
         }
         cout    << setw(WIDTH_INT) << (dist%10 ? " " : to_string(dist))
                 << CHAR_LIM
-                << string(sizeSpace-shift,CHAR_SPACE) 
-                << string(widthRoad,CHAR_ROAD)
+                << string(sizeSpace-shift,CHAR_SPACE)
+                << widthRoadPrint
                 << string(width-2-widthRoad-sizeSpace+shift,CHAR_SPACE)
                 << CHAR_LIM << endl;
         sizeSpace-=shift;
