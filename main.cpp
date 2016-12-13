@@ -1,9 +1,9 @@
 
 /*
  -----------------------------------------------------------------------------------
- Laboratoire : 05b
- Fichier     : Laboratoire05b_Demierre_Melly.cpp
- Auteur(s)   : Yann Demierre, Johanna Melly
+ Laboratoire : 06
+ Fichier     : Laboratoire06_Meyer_Melly.cpp
+ Auteur(s)   : Yohann Meyer, Johanna Melly
  Date        : 21.11.2016
 
  But         :  Print the calendar of any year for each month. We take care of leap
@@ -35,15 +35,56 @@
 using namespace std;
 
 /*
- Asks the user if he wants to start the program again
- Checks the validity of the input
- Returns char that may end the program or not
-*/
-
-
+ * Goal: asks the user if he want to restart or exit the program
+ *       checks if the inputs are valids
+ *
+ * parameters:
+ *      none
+ *
+ * @return:
+ *      isValid: boolean containing the answer of the user to the question
+ *               "do you want to start again?"
+ */
 bool doAgain();
+
+/*
+ * Goal: asks the user which vaules he want to use for the program
+ *       checks if the inputs are valids
+ *       if the inputs are not valids, asks again the user to enter the values
+ *
+ * parameters:
+ *      @param message   : string that contains the message aasking the user about
+ *                         the values needed in the program
+ *      @param limitMin  : int that contains the lowest integer that the user
+ *                         is allowed to enter
+ *      @param limitMax  : int that contains the highest integer that the user
+ *                         is allowed to enter
+ *      @param error     : string that contains a message noticing the user that
+ *                         he entered an invalid value
+ *      @param WIDTH_INT : const int that contains the width of the left margin
+ *      @param WIDTH_TEXT: const int that contains a width that will be used
+ *                         to align the text that is displayed
+ *       
+ *
+ * @return:
+ *      userInput : int contianing the value that the user entered
+ */
 int input(string message, int limitMin, int limitMax, string error="Mauvaise saisie. Veuillez reessayez", const int WIDTH_INT=4u, const int WIDTH_TEXT=30u);
 
+/*
+ * Goal: randomly displays a road, using the values that the user entered before
+ *       as constraints
+ *
+ * parameters:
+ *      @param lengthCirc : int that contains the length of the road
+ *      @param range      : int that contains the highest range possible
+ *      @param widthRoad  : int that contains the width of the road
+ *      @param width      : int that contains the total width (border to border)
+ *      @param WIDTH_INT  : const int that contains the width of the left margin
+ * 
+ * @return:
+ *      nothing
+ */
 void printRoad(int lengthCirc, int range, int widthRoad, int width, const int WIDTH_INT=4u);
 /*
  * Goal: Show a prompt for the user to definitely quit the program.
@@ -56,6 +97,16 @@ void printRoad(int lengthCirc, int range, int widthRoad, int width, const int WI
  */
 void toQuit(string message);
 
+/*
+ * Goal: randomly displays a road using values entered by the user.
+ *       Uses the function.
+ *
+ * parameters:
+ *      none
+ *
+ * @return:
+ *      EXIT_SUCCESS
+ */
 int main() {
     const int   LENGTH_MIN      = 0,
                 LENGTH_MAX      = 1000,
@@ -76,7 +127,7 @@ int main() {
         cout << "Ce programme affiche une route en fonction de différents paramètres" << endl << endl;
 
         lengthCirc  = input("Longueur du circuit", LENGTH_MIN, LENGTH_MAX);
-        range   = input("range max des virages", AMP_MIN, AMP_MAX);
+        range       = input("Amplitude max des virages", AMP_MIN, AMP_MAX);
         widthRoad   = input("Largeur de la route", WIDTH_ROAD_MIN, WIDTH_ROAD_MAX);
         width       = input("Largeur totale", WIDTH_MIN, WIDTH_MAX);
 
@@ -109,8 +160,8 @@ bool doAgain(){
 int input(string message, int limitMin, int limitMax, string error, const int WIDTH_INT, const int WIDTH_TEXT){
     int userInput;
     bool isValid;
-    do{                                      //Shut Clion about u long
-        cout  << message << setw(WIDTH_TEXT-(int)message.length()) << ": [ " << setw(WIDTH_INT) << limitMin << " et " << setw(WIDTH_INT) << limitMax <<"] :" ;
+    do{
+        cout  << message << setw(WIDTH_TEXT-message.length()) << ": [ " << setw(WIDTH_INT) << limitMin << " et " << setw(WIDTH_INT) << limitMax <<"] :" ;
         isValid = bool(cin >> userInput);
 
         if(!isValid || userInput < limitMin || userInput > limitMax ){
