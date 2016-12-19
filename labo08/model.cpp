@@ -38,10 +38,8 @@ void printThrows(const int tab[], int size){
     for(int ite=0;ite<size;ite++){
         yolo+=tab[ite];
         int percent = getPercent(tab[ite], tab[size+1]);
-        cout << tab[ite] << " : " << tab[size+1] << ": " << percent << endl;
 
-        cout <<setw(WIDTH_TEXT_BASE) << "tableau[" << ite << "]" <<  setw(WIDTH_INT_BASE) << percent << string(percent, '=') << endl;
-        cout << "===================" << yolo << endl;
+        cout << "tableau[" << ite << "]" <<  setw(WIDTH_INT_BASE*2) << percent << setw(WIDTH_TEXT_BASE/3) << " " << string(percent, '=') << endl;
     }
 }
 void initTab(int tab[], const int min, const int max, int initVal){

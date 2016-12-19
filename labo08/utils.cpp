@@ -11,7 +11,6 @@
 
 #include "utils.h"
 
-/***************************SAISIE****************************/
 bool doAgain() {
 
 	char const YES = 'Y';

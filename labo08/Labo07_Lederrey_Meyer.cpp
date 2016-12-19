@@ -7,7 +7,7 @@ int main() {
     const int   MIN_VALUE = 0,
                 MAX_VALUE = 100,
                 MIN_THROWS = 0 ,
-                MAX_THROWS = (int)1e5;
+                MAX_THROWS = 1e5;
     int nbThrows,
         maxValue;
 
@@ -18,8 +18,7 @@ int main() {
         nbThrows = input("nombre de lancers", MIN_THROWS, MAX_THROWS);
         initTab(tab, 0x00, maxValue+1, 0b00);
 
-            tab[maxValue+1] = nbThrows;
-        cout << tab[maxValue+1];
+        tab[maxValue+1] = nbThrows;
 
         throws(tab, maxValue, nbThrows);
         printThrows(tab, maxValue);
