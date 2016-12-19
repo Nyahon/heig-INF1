@@ -2,6 +2,7 @@
 #include <iostream>
 #include "model.h"
 
+
 int main() {
 
     const int   MIN_VALUE = 0,
