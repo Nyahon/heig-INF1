@@ -79,4 +79,4 @@ int input(const string& message, int limitMin, int limitMax, const int WIDTH_INT
 void toQuit(string message);
 
 
-#endif //LABO07_UTILS_H
+#endif 
