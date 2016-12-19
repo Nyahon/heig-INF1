@@ -38,7 +38,7 @@ void printThrows(const int tab[], int size){
         double percent = getPercent(tab[ite], tab[size+1]);
         double percentbis = (percent-int(percent));
         percentbis = percentbis*10;
-        cout << "tableau[" << ite << "]" <<  setw(WIDTH_INT_BASE*2) << percent << setw(WIDTH_TEXT_BASE/3) << " " << string(int(percent), '=') << string(int(percentbis), '.') << endl;
+        cout << "tableau[" << setw(log10(size-1)+1) << ite << "]" <<  setw(WIDTH_INT_BASE*2) << (int)percent << setw(WIDTH_TEXT_BASE/3) << " " << string(int(percent), '=') << string(int(percentbis), '.') << endl;
     }
 }
 void initTab(int tab[], const int min, const int max, int initVal){
